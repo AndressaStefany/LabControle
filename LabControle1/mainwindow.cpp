@@ -409,7 +409,20 @@ void MainWindow::Controle()
         else if(ui->radioButtonMalhaFechada->isChecked())
         {
             double st2, erro1, erro2, pv1;
+            if(ui->checkBox_controle->isChecked()){
+                Matriz x(2,1), r(1,1);
+                pv= funcSensor(sensores[1]);
+                x= vector<vector<double>>({ {funcSensor(sensores[0])}, {funcSensor(sensores[1])} });
+                r= { {st} };
+                tensao = seguidor.Seguir(x,r);
 
+                mutex_.lock();
+                ui->plotS1->graph(1)->addData(tempo, st);
+                ui->plotS1->graph(4)->addData(tempo, abs(erro2));
+                ui->plotS1->graph(5)->addData(tempo, abs(erro1));
+                mutex_.unlock();
+            }
+            else{
             if(ui->comboBoxSinalOrdem->currentText() == "Primeira"){
                 pv=pv1= funcSensor(sensores[0]);
                 erro1= st - pv;
@@ -485,14 +498,7 @@ void MainWindow::Controle()
                 ui->plotS2->graph(5)->addData(tempo, pid1.getD());
                 mutex_.unlock();
             }
-            if(ui->checkBox_controle->isChecked()){
-                Matriz x(2,1), r(1,1);
-                pv= funcSensor(sensores[1]);
-                x= vector<vector<double>>({ {funcSensor(sensores[0])}, {funcSensor(sensores[1])} });
-                r= { {st} };
-                tensao = seguidor.Seguir(x,r);
             }
-
             tensaoCalculado = tensao;
             tensao = trava(tensao, pv1);
             pid1.antWindUP(tensaoCalculado, tensao);
@@ -996,6 +1002,24 @@ void MainWindow::on_doubleSpinBox_p2_img_editingFinished()
     else
         AtulizaObservador(true);
 }
+
+
+void MainWindow::on_doubleSpinBox_p3_real_editingFinished()
+{
+    if(ui->checkBox_controle->isChecked())
+        AtualizaSeguidor(true);
+    else
+        AtulizaObservador(true);
+}
+
+void MainWindow::on_doubleSpinBox_p3_img_editingFinished()
+{
+    if(ui->checkBox_controle->isChecked())
+        AtualizaSeguidor(true);
+    else
+        AtulizaObservador(true);
+}
+
 
 void MainWindow::on_checkBox_controle_clicked(bool checked)
 {

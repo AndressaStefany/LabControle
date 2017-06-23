@@ -56,6 +56,10 @@ private slots:
     void AtualizaSeguidor(bool polos);
     void on_doubleSpinBox_L3_editingFinished();
 
+    void on_doubleSpinBox_p3_real_editingFinished();
+
+    void on_doubleSpinBox_p3_img_editingFinished();
+
 private:
     Quanser* quanser;
     Ui::MainWindow *ui;

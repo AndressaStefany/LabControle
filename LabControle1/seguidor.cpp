@@ -39,3 +39,8 @@ double Seguidor::Seguir(Matriz x, Matriz r)
     erro+=r[0][0]-x[1][0];
     return -K[0][0]*x[0][0]-K[0][1]*x[1][0]+K[0][2]*(erro);
 }
+
+void Seguidor::setK(Matriz K_)
+{
+    this->K= K_;
+}
