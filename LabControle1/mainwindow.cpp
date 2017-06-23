@@ -1072,6 +1072,10 @@ void MainWindow::AtualizaSeguidor(bool polos)
         ui->doubleSpinBox_L2->setValue(K[0][1]);
         ui->doubleSpinBox_L3->setValue(K[0][2]);
 
+        ui->labelPolos->setText("("+ QString::number(p1.real(),'g',2) + "+i"+QString::number(p1.imag(),'g',2)+", "+
+                                     QString::number(p2.real(),'g',2) + "+i"+QString::number(p2.imag(),'g',2)+", "+
+                                     QString::number(p3.real(),'g',2) + "+i"+QString::number(p3.imag(),'g',2)+")");
+
         ui->label_2->setText("K");
         ui->labelL->setText("["+ QString::number(K[0][0]) +", "+ QString::number(K[0][1])+", "+ QString::number(K[0][2])+"]");
     }
