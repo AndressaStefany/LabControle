@@ -433,9 +433,9 @@ Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
 \thispagestyle{main}
 
 \section{RESULTADOS}
-\hspace{4ex}Nas figuras a seguir será apresentado os gráficos da interface do software, a qual mostrará o comportamento do seguidor de referencia para entradas do tipo degrau com vários pólos, onde a curva em azul indica o nível do tanque 1($L_1$), a curva em verde é o nível do tanque 2($L_2$).
+\hspace{4ex}Nas figuras a seguir será apresentado os gráficos da interface do software, a qual mostrará o comportamento do seguidor de referência para entradas do tipo degrau com vários pólos, onde a curva em azul indica o nível do tanque 1($L_1$) e a curva em verde é o nível do tanque 2($L_2$).
 
-\hspace{4ex}Inicialmente, como mostrado nas figuras \ref{img1}, foram iseridos os polos 0,9048; 0,9920; 0,9980, para esses polos os sistema foi bastante lento demorando mais de 200 segundos para chegar em uma faixa de 2\% do valor da referencia.
+\hspace{4ex}Inicialmente, como mostrado nas figuras \ref{img1}, foram iseridos os pólos 0,9048; 0,9920; 0,9980, para esses pólos o sistema foi bastante lento, demorando mais de 200 segundos para chegar em uma faixa de 2\% do valor da referência.
 \begin{figure}[H]
 \centering
 \includegraphics[width=13cm]{FotosSeguidor/PolosDados.png}
@@ -443,7 +443,7 @@ Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
 \label{img1}
 \end{figure}
 
-\hspace{4ex}Agora com os polos 0,9000; 0,9000; 0,9900 podemos ver na figura \ref{img3} que ele chegou na referencia mais rapidamente.
+\hspace{4ex}Agora com os pólos 0,9000; 0,9000; 0,9900; podemos ver na figura \ref{img3} que a resposta do sistema chegou na referência mais rapidamente.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=13cm]{FotosSeguidor/Bom}
@@ -451,7 +451,7 @@ Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
 \label{img3}
 \end{figure}
 
-\hspace{4ex}Com os polos 0,9000; 0,9000; 0,9800 a resposta foi ainda mais rapida como visto na figura \ref{img4}.
+\hspace{4ex}Com os pólos 0,9000; 0,9000; 0,9800; a resposta foi ainda mais rápida, isso pode ser notado na figura \ref{img4}.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=13cm]{FotosSeguidor/MuitoBom}
@@ -460,7 +460,7 @@ Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
 \end{figure}
 
 
-\hspace{4ex}Para os polos imaginarios, foi observado que o controlador fica bastante agressivo e logo fica instavel, por isso foram utilizados valores pequenos para as partes imaginarias como pode ser visto nas figuras \ref{img5} e \ref{img6}.
+\hspace{4ex}Para os pólos imaginários, foi observado que o controlador fica bastante agressivo e, logo em seguida, fica instável, por isso foram utilizados valores pequenos para as partes imaginárias, como pode ser verificado nas figuras \ref{img5} e \ref{img6}.
 \begin{figure}[!h]
 \centering
 \includegraphics[width=13cm]{FotosSeguidor/PolosComplexos}
@@ -477,12 +477,12 @@ Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
 \newpage
 
 %%%%%%%%%% CONCLUSÃO %%%%%%%%%%%%%%%
-
+\newpage
 \thispagestyle{main}
 
 \section{CONCLUSÃO}
 
-\hspace{4ex}A partir dos testes realizados com os pólos em zero, pólos imaginários e pólos reais, pode-se concluir que o observador de estados mostrou que o valor observado do tanque 2 será semelhante e, muitas vezes, igual ao valor real do nível, enquanto que o valor observável do tanque 1 foi uma aproximação. Além disso, no caso dos pólos imaginários em particular, o nível observável do tanque 1 se mostrou muito oscilatório com relação ao seu valor real.
+\hspace{4ex}A partir dos testes realizados com os pólos próximos do círculo unitário, sendo alguns com parte imaginária e outros não, pode-se concluir que o controle da planta realizado através do seguidor de referência torna o sistema instável à medida que o pólo vai se aproximando de zero e quando a parte imaginária do pólo é grande, isso também resulta em uma resposta de comportamento agressivo.
 
 \newpage
 %%%%%%%% REFERÊNCIAS %%%%%%%%%%%%%%%%%
