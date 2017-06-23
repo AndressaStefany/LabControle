@@ -196,13 +196,13 @@ Lucas Costa Pereira Cavalcante.
 
 \begin{flushleft}
 
-\hspace{4ex}O presente trabalho é a quinta etapa da construção de um aplicativo desktop para controle de sistema de tanques. O software utiliza a comunicação cliente/servidor no qual o sistema de tanques é o servidor. A planta antes utilizada da Quanser foi substituída por uma simulação feita em Java3D, o que eliminou o nível de ruído dos resultados. Nesta etapa do trabalho, o objetivo foi projetar e implementar um observador de estados para um controlador proporcional de segunda ordem. A teoria acerca do observador de estados é introduzida, após é apresentado os resultados dos testes de controle da planta. Por fim, chega-se a conclusão que o valor observado no tanque 2 é muito mais próximo da realidade do que o observado no tanque 1, além deste último apresentar instabilidade para polos imaginários. \\
+\hspace{4ex}O presente trabalho é a sexta etapa da construção de um aplicativo desktop para controle de sistema de tanques. O software utiliza a comunicação cliente/servidor no qual o sistema de tanques é o servidor. A planta antes utilizada da Quanser foi substituída por uma simulação feita em Java3D, o que eliminou o nível de ruído dos resultados. Nesta etapa do trabalho, o objetivo foi projetar e implementar um seguidor de referência para um controlador proporcional de segunda ordem. A teoria acerca do seguidor de referência  é introduzida, após são apresentados os resultados dos testes de controle da planta. Por fim, chega-se a conclusão que a aproximação do pólo em zero torna o sistema instável, e que este responde agressivamente a pólos com grande parte imaginária. \\
 
 \end{flushleft}
 
 \vspace{1.5cm}
 
-\textbf{Palavras-chave:} sistema de tanques; sistema de controle; software; planta Quanser, controlador PID; observação de estados, realimentação de estados.
+\textbf{Palavras-chave:} sistema de tanques; sistema de controle; software; planta Quanser, controlador PID; espaço de estados, seguidor de referência.
 
 \newpage
 
@@ -267,159 +267,206 @@ Lucas Costa Pereira Cavalcante.
 
 \section{REFERENCIAL TEÓRICO}
 
-\subsection{DISCRETIZAÇÃO}
-\hspace{4ex}Para que um computador ou microcontrolador possa controlar um sistema, estes devem ser capaz de entender as informações obtidas pelo sistema no “mundo real” de forma a trabalhar estas informações digitalmente. Mas enquanto as variáveis podem ser sinais analógicos, a máquina entende somente sinais digitais. Há, portanto, a necessidade de uma transformação nas informações recebidas pelo sistema, para que estas sejam lidas pelo controlador digital – a este processo de transformação é dado o nome de {\bf discretização}.
+\subsection{SISTEMA DISCRETO NO TEMPO}
 
-Em controle de estados, o comportamento do sistema será determinado por matrizes (A, B, C, D) que deverão ser modificadas uma vez que os sinais contínuos sejam discretizados, de tal forma que o comportamento do sistema discreto seja o mais próximo possível do sistema contínuo. Para encontrar as novas matrizes do sistema (G e H), aplica-se a relação entre as variáveis contínua e discreta na equação de sistemas discretos.
+\hspace{4ex}Dado um sistema linear discreto invariante no tempo descrito pelas variáveis de estado:
 
 \begin{figure}[H]
-     \centering
-     \subfloat[]{\includegraphics[width=5cm]{fotosLab5/sistema_discreto.png}\label{sistdiscreto}}
-\hspace{1cm}
-     \subfloat[]{\includegraphics[width=7cm]{fotosLab5/relacao.png}\label{relacao}}
-\hspace{1cm}
-     \subfloat[]{\includegraphics[width=5cm]{fotosLab5/G_H.png}\label{g_h}}
-\hspace{1cm}
-     \caption{G e H, matrizes do observador de tempo discreto}
-     \label{fig:G_H}
+\centering
+\includegraphics[width=5cm]{imagens-6/1.png}
 \end{figure}
 
-\subsection{OBSERVADOR DE ESTADOS}
 
-\hspace{4ex}O observador de estados é um algoritmo que surgiu da necessidade de se medir os estados de um sistema de controle. Em função dos altos custos e às vezes da impossibilidade de se conseguir medir estes estados, o observador de estados funciona como alternativa à medição, estimando o valor das variáveis de estado através dos valores de entrada e saída.
+A representação discreta de um sistema será obtido, a partir de sua representação contínua, por:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/18.png}
+\end{figure}
 
-\vspace{0.7cm}
-\hspace{6ex}{\bf 1. Caso contínuo}
 
-Supondo um sistema contínuo observável formado pelas equações:
+\subsubsection{ESTABILIDADE}
+Dado:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/19.png}
+\end{figure}
+Um sistema de estados discreto será considerado estável caso todos os autovalores da matriz \textbf{G} estejam localizados dentro do círculo unitário.
+
+\subsubsection{CONTROLABILIDADE}
+Um sistema de estados discreto será considerado controlável se sua matriz de controlabilidade (nxn) tiver posto n.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/20.png}
+\caption{Matriz de Controlabilidade}
+\end{figure}
+
+\subsubsection{OBSERVABILIDADE}
+Um sistema de estados discreto será considerado observável se sua matriz de observabilidade (nxn) tiver posto n.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3cm]{imagens-6/21.png}
+\caption{Matriz de Observabilidade}
+\end{figure}
+
+\subsection{SEGUIDOR DE REFERÊNCIA}
+\hspace{4ex}Seguidores de referência, ou servosistemas, são sistemas descritos por variáveis de estado projetados para, além de ter uma dinâmica desejada, seguir uma entrada especificada, de erro zero. Para projetar sistemas deste tipo, é usado o princípio do modelo interno, que diz que um sistema em malha fechada irá seguir um sinal de referência de entrada, sem erro em regime permanente, quando o modelo que gera esta referência estiver incluso no sistema realimentado estável.
+
+\subsection{PROJETO DE SEGUIDOR DISCRETO}
+
+\hspace{4ex}Considerando um sistema discreto no tempo:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/1.png}
+\end{figure}
+
+
+Com um sinal:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/2.png}
+\end{figure}
+
+
+E sendo:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/4.png}
+\end{figure}
+
+
+É possível através de substituições e do desenvolvimento das equações, encontrar:
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{imagens-6/5.png}
+\end{figure}
+
+
+A partir do qual, tem-se:
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{imagens-6/7.png}
+\end{figure}
+
+
+Para o caso dos autovalores da matriz acima serem estáveis, com  k tendendo ao infinito:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/14.png}
+\end{figure}
+
+\break
+
+
+Considerando a referência do \textbf{tipo degrau} e definindo:
+\begin{figure}[H]
+\centering
+\includegraphics[width=4cm]{imagens-6/15.png}
+\end{figure}
+
+
+Tem-se que:
+\begin{figure}[H]
+\centering
+\includegraphics[width=9cm]{imagens-6/10.png}
+\end{figure}
+
+
+Definindo w(k):
+\begin{figure}[H]
+\centering
+\includegraphics[width=9cm]{imagens-6/11.png}
+\end{figure}
+
+
+Encontra-se:
+\begin{figure}[H]
+\centering
+\includegraphics[width=10cm]{imagens-6/12.png}
+\end{figure}
+
+
+Sendo a alimentação de estados:
+\begin{figure}[H]
+\centering
+\includegraphics[width=3cm]{imagens-6/16.png}
+\end{figure}
+
+
+E conhecendo Fórmula de Ackermann para controle discreto:
+\begin{figure}[H]
+\centering
+\includegraphics[width=5cm]{imagens-6/17.png}
+\end{figure}
+
+
+Finalmente, acha-se o modelo para o seguidor de referência desejado:
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm]{imagens-6/13.png}
+\end{figure}
+
+
 \newpage
-\begin{figure}[H]
-\centering
-\includegraphics[width=5cm]{fotosLab5/sistema_continuo.png}
-\caption{Sistema de controle contínuo}
-\label{continuo}
-\end{figure}
 
-Sendo A, B, C e D conhecidos, e sendo y(t) e u(y) medidos pelo sistema, o observador de estados será definido por:
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=8cm]{fotosLab5/observador_continuo.png}
-\caption{Observador de estados contínuo}
-\label{continuo}
-\end{figure}
-
-\vspace{0.7cm}
-\hspace{6ex}{\bf 2. Caso discreto}
-
-Supondo um sistema discreto observável, de ordem n, formado por:
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=6cm]{fotosLab5/sistema_discreto.png}
-\caption{Sistema de controle discreto}
-\label{sist_discreto}
-\end{figure}
-
-Sendo G, H, C e D conhecidos e sendo x(k) e u(k) obtidos pelo sistema, o observador de estados discreto será definido por:
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=10cm]{fotosLab5/observador_discreto.png}
-\caption{Observador de estados discreto}
-\label{ob_discreto}
-\end{figure}
-
-\subsubsection{ERRO DE ESTIMAÇÃO}
-Erro de estimação é como é conhecida a diferença entre x e $\hat{x}$. Sabendo os valores das derivadas de x e $\hat{x}$ é possível calcular $\dot{\mathbf{e}}$:
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=10cm]{fotosLab5/erro_continuo.png}
-\caption{Erro de estimação (tempo contínuo)}
-\label{erro_continuo}
-\end{figure}
-
-Para o caso discreto, obtém-se pelo mesmo método a derivada do erro:
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=10cm]{fotosLab5/erro_discreto.png}
-\caption{Erro de estimação (tempo discreto)}
-\label{erro_discreto}
-\end{figure}
-
-\subsubsection{FÓRMULA DE ACKERMANN}
-
-\hspace{4ex}A fórmula de Ackermann permite determinar através de variáveis conhecidas o vetor de ganhos do sistema.
-
-O vetor de ganhos terá o formato:
-
-\hspace{4ex}{\bf L=[L1,L2,…,Ln]}
-
-Os elementos dos vetores serão encontrados pela fórmula de Ackermann. Para o caso discreto, teremos:
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=5cm]{fotosLab5/ackermann.png}
-\caption{Fórmula de Ackermann}
-\label{ackermann}
-\end{figure}
-
-
-\newpage
 %%%%%%%%%% METODOLOGIA %%%%%%%%%%%%%%%
 
 
 
 \section{METODOLOGIA}
 
-\hspace{4ex}Para se fazer a observação de estados da planta, foi necessário obter as matrizes G e H. A partir do modelo oferecido na descrição do experimento, pode-se calcular com as estratégias citadas anteriormente, na seção Referencial Teórico. Além de obter essas matrizes, foi verificado se o sistema é observável, e foi obtido um resultado positivo. Juntamente com esse cálculo, de forma análoga, observou que o sistema não é controlável.
+\hspace{4ex}Para o seguidor de referência, foi necessário obter as matrizes G aumentada e H aumentada, a partir do sistema discreto calculado na experiência anterior. Tais matrizes foram utilizadas para o cálculo da matriz de ganhos K.
+%%matrizes
+%\[
+%G_A = 
+%\begin{matrix}
+%0.993452 & 0        & 0.0295461 \\ 
+%0.006521 & 0.993457 & 0.0000968713 \\ 
+%0        & 0        & 0
+%\end{matrix} 
+%\]
 
-\hspace{4ex}Uma vez com as informações importantes do sistema, a implementação da observação de estados se transforma em algoritmos de cálculo de pólos e cálculo da matriz de ganhos L. Feitas nos seguintes métodos.
+O programa desenvolvido oferece duas opções de entrada para o seguidor de referência: o primeiro, os pólos para se encontrar os ganhos; ou entrar com os ganhos. Para o caso em que os ganhos forem oferecidos, o programa calcula os pólos referentes àqueles ganhos.
+
+\hspace{4ex}Uma vez com as informações importantes do sistema, a implementação do seguidor se resume nos seguintes métodos.
 
 \begin{lstlisting}
 
-vector<complex<double>> Observador::Calcula_Polos(Matriz ll)
+double Seguidor::Seguir(Matriz x, Matriz r)
 {
-    complex<double> a00(G[0][0],0), a01(G[0][1],0), 
-    		a10(G[1][0],0), a11(G[1][1],0);
-    complex<double> l1(ll[0][0],0), l2(ll[1][0],0);
-    vector<complex<double>> polos;
-    complex<double> p1= -(-a00-a11+l2+
-    	sqrt(pow(l2,2)+(2.0*a00-2*a11)*l2-4.0*a10*l1+
-    	pow(a11,2.0)-2.0*a00*a11+
-    	4.0*a01*a10+pow(a00,2)))/2.0;
-    complex<double> p2=  (a00+a11-l2+
-    	sqrt(pow(l2,2)+(2.0*a00-2.0*a11)*l2-4.0*a10*l1+
-    	pow(a11,2)-2.0*a00*a11+4.0*a01*a10+pow(a00,2)))/2.0;
-    polos.push_back(p1);
-    polos.push_back(p2);
-    return polos;
+    erro+=r[0][0]-x[1][0];
+    return -K[0][0]*x[0][0]-K[0][1]*x[1][0]+K[0][2]*(erro);
 }
-Matriz Observador::Calcula_L(complex<double> p1, complex<double> p2)
+
+Matriz Seguidor::Calcula_K(complex<double> p1, complex<double> p2, complex<double> p3)
 {
-    Matriz I= Matriz::Identidade(2), aux(2,1);
-    aux[0][0]= 0;
-    aux[1][0]= 1;
-    double c[2]= {(-p1-p2).real(), (p1*p2).real()};
-    Matriz Ackerman= (G^2)+(c[0]*G)+(c[1]*I);
-    L= (Ackerman*W_inv)*aux;
-    return L;
+    Matriz I= Matriz::Identidade(3), aux(1,3);
+    aux= {{0,0,1}};
+    double c[3]= {(-p1-p2-p3).real(), (p1*p2+p2*p3+p1*p3).real(),(-p1*p2*p3).real()};
+    Matriz Ackerman= (Ga^3)+(Ga^2)*c[0]+Ga*c[1]+I*c[2];
+    K= aux*W_inv*Ackerman;
+    K= (K+aux)*Kaux;
+    return K;
 }
 
 \end{lstlisting}
 
-\hspace{4ex}Os métodos acima, são algoritmos que representam os cálculos citados no referencial teórico. Já no método para encontrar os pólos, foi feito uma manipulação algébrica a partir das equações para encontrar a matriz L.
+\hspace{4ex}Os métodos acima, são algoritmos que representam os cálculos citados no referencial teórico. Já no método para encontrar os pólos, foi feito uma manipulação algébrica a partir das equações para encontrar a matriz K.
 
-\hspace{4ex}Tais cálculos são feitos devido o programa ter como entrada os pólos e a matriz de ganhos, como mostrado na figura a seguir. Quando o usuário escolhe inserir o pólos, é feita a chamada do método Calcula\_L, para então observar o sistema.
+\hspace{4ex}A interface para entrada de dados do usuário se assemelha ao que foi feito para o observador. Porém, foi feito alterações para melhorar a experiência do usuário. Retirou-se da entrada do ganho $K_p$ pois era redudante e acrescentou-se mais um elemento na matriz de ganho, devido ao sistema aumentado. 
 
+\begin{figure}[H]
+     \centering
+     \subfloat[]{\includegraphics[width=6.65cm]{fotosLab5/observador-interface.png}\label{interface-obs}}    
+\hspace{1cm}
+     \subfloat[]{\includegraphics[width=7cm]{imagens-6/interface.png}\label{interface-ctl}}
+     
+     \caption{Comparação entre versões}
+     \label{fig:interface-in}
+\end{figure}
 
-
-\hspace{4ex}Caso contrário, ou seja, caso a entrada seja a matriz L, é encontrado os pólos e apresentado ao usuário na interface os respectivos pólos.
-
-\hspace{4ex}Por fim, utilizando o simulador R2D2E, foram feitos testes de controle fixado no tipo proporcional para o sistema de segunda ordem com apenas um controlador, alternando entre as opções dadas ao usuário, ora tendo como entrada os pólos, ora a matriz L. Sendo que o foco foi o teste com vários pólos, pois desejava-se encontrar os pólos mais adequados para o sistema. 
+\hspace{4ex}Por fim, utilizando o simulador R2D2E, foram feitos testes de controle fixado no tipo proporcional para o sistema de segunda ordem com apenas um controlador. Sendo que o foco foi o teste com vários pólos, pois desejava-se encontrar os pólos mais adequados para o sistema. 
 
 
 
